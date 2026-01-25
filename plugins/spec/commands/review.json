@@ -1,0 +1,32 @@
+{
+  "name": "review",
+  "description": "Review and score an existing PRD with improvement recommendations",
+  "arguments": [
+    {
+      "name": "path",
+      "description": "Path to PRD file (defaults to PRD.json)",
+      "required": false
+    }
+  ],
+  "instructions": "Review an existing PRD for quality and completeness.\n\n## Process\n\n1. **Load**: Use `prd_load` to examine the document\n2. **Validate**: Use `prd_validate` to check structure\n   - Required fields present\n   - IDs properly formatted\n   - References valid\n3. **Score**: Use `prd_score` to evaluate quality\n   - 10 weighted categories\n   - Overall 0-10 score\n   - Decision recommendation\n4. **Analyze**: Examine each category\n   - Identify gaps and blockers\n   - Find missing evidence\n   - Check traceability\n5. **Recommend**: Provide specific improvements\n   - Prioritize by score impact\n   - Include concrete examples\n   - Suggest specific additions\n\n## Output Format\n\n### Quality Score: X.X/10\n**Decision**: APPROVE | REVISE | HUMAN REVIEW\n\n### Category Breakdown\n| Category | Score | Issues |\n|----------|-------|--------|\n| Problem Definition | X.X | ... |\n| ... | | |\n\n### Top Recommendations\n1. [Highest impact fix]\n2. [Second priority]\n3. [Third priority]\n\n### Blockers (if any)\n- Critical issues that must be resolved",
+  "process": [
+    "Load the PRD document",
+    "Validate structure and references",
+    "Score against quality rubric",
+    "Analyze each category for gaps",
+    "Generate prioritized recommendations"
+  ],
+  "dependencies": ["prdtool-mcp"],
+  "examples": [
+    {
+      "description": "Review default PRD",
+      "input": "/prdtool:review",
+      "output": "Loads PRD.json and provides quality assessment"
+    },
+    {
+      "description": "Review specific file",
+      "input": "/prdtool:review specs/auth-prd.json",
+      "output": "Loads and reviews the specified PRD file"
+    }
+  ]
+}

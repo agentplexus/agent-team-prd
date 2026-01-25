@@ -1,0 +1,25 @@
+# Binaries
+prdtool
+prdtool-mcp
+generate
+*.exe
+
+# OS files
+.DS_Store
+
+# Environment
+.env
+.envrc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test artifacts
+coverage.txt
+*.test
+
+# Build artifacts
+dist/

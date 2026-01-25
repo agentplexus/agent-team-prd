@@ -1,0 +1,27 @@
+{
+  "name": "exec-summary",
+  "description": "Generate an executive summary for leadership review",
+  "arguments": [
+    {
+      "name": "path",
+      "description": "Path to PRD file (defaults to PRD.json)",
+      "required": false
+    }
+  ],
+  "instructions": "Generate an executive summary suitable for leadership review.\n\n## Process\n\n1. **Score**: Use `prd_score` to get quality assessment\n2. **Generate**: Use `prd_view --format=exec` for executive view\n3. **Summarize**: Present decision recommendation\n   - GO / NO-GO / CONDITIONAL\n   - Key factors for decision\n4. **Highlight**: Surface critical information\n   - Top risks and blockers\n   - Required resources\n   - Timeline dependencies\n\n## Output Format\n\n### Executive Summary: [PRD Title]\n\n**Status**: [Draft | In Review | Approved]\n**Quality Score**: X.X/10\n**Recommendation**: [APPROVE | REVISE | ESCALATE]\n\n#### Problem\n[1-2 sentence problem statement with evidence]\n\n#### Proposed Solution\n[Selected solution with key tradeoffs]\n\n#### Success Metrics\n- **North Star**: [Primary metric with target]\n- **Supporting**: [Key supporting metrics]\n\n#### Key Risks\n1. [Risk 1 with mitigation]\n2. [Risk 2 with mitigation]\n\n#### Decision Required\n[Specific ask of leadership]",
+  "process": [
+    "Load and score the PRD",
+    "Generate executive view",
+    "Extract decision recommendation",
+    "Highlight risks and blockers",
+    "Format for leadership presentation"
+  ],
+  "dependencies": ["prdtool-mcp"],
+  "examples": [
+    {
+      "description": "Generate exec summary",
+      "input": "/prdtool:exec-summary",
+      "output": "Generates executive summary of PRD.json"
+    }
+  ]
+}

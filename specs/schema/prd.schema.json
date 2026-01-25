@@ -1,0 +1,1701 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grokify/structured-requirements/schema/prd.schema.json",
+  "title": "Structured PRD",
+  "description": "Schema for structured Product Requirements Documents",
+  "type": "object",
+  "required": ["metadata", "executive_summary", "objectives", "personas", "user_stories", "requirements", "roadmap"],
+  "properties": {
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "executive_summary": {
+      "$ref": "#/$defs/executive_summary"
+    },
+    "objectives": {
+      "$ref": "#/$defs/objectives"
+    },
+    "personas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/persona"
+      },
+      "minItems": 1
+    },
+    "user_stories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/user_story"
+      },
+      "minItems": 1
+    },
+    "requirements": {
+      "$ref": "#/$defs/requirements"
+    },
+    "roadmap": {
+      "$ref": "#/$defs/roadmap"
+    },
+    "assumptions": {
+      "$ref": "#/$defs/assumptions_constraints"
+    },
+    "out_of_scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "technical_architecture": {
+      "$ref": "#/$defs/technical_architecture"
+    },
+    "ux_requirements": {
+      "$ref": "#/$defs/ux_requirements"
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/risk"
+      }
+    },
+    "glossary": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/glossary_term"
+      }
+    },
+    "custom_sections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/custom_section"
+      }
+    },
+    "problem": {
+      "$ref": "#/$defs/problem_definition",
+      "description": "Extended problem definition with evidence"
+    },
+    "market": {
+      "$ref": "#/$defs/market_definition",
+      "description": "Market analysis and competitive landscape"
+    },
+    "solution": {
+      "$ref": "#/$defs/solution_definition",
+      "description": "Solution options and selection rationale"
+    },
+    "decisions": {
+      "$ref": "#/$defs/decisions_definition",
+      "description": "Decision records for the PRD"
+    },
+    "reviews": {
+      "$ref": "#/$defs/reviews_definition",
+      "description": "Review outcomes and quality assessments"
+    },
+    "revision_history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/revision_record"
+      },
+      "description": "Audit trail of PRD revisions"
+    },
+    "goals": {
+      "$ref": "#/$defs/goals_alignment",
+      "description": "Alignment with strategic goals (V2MOM, OKR)"
+    }
+  },
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "required": ["id", "title", "version", "status", "created_at", "updated_at", "authors"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the PRD"
+        },
+        "title": {
+          "type": "string",
+          "description": "Product or feature name"
+        },
+        "version": {
+          "type": "string",
+          "description": "Document version (semver recommended)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "in_review", "approved", "deprecated"]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person"
+          },
+          "minItems": 1
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person"
+          }
+        },
+        "approvers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/approver"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "person": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "approver": {
+      "type": "object",
+      "required": ["name", "approved"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "role": {
+          "type": "string"
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "approved": {
+          "type": "boolean"
+        },
+        "comments": {
+          "type": "string"
+        }
+      }
+    },
+    "executive_summary": {
+      "type": "object",
+      "required": ["problem_statement", "proposed_solution", "expected_outcomes"],
+      "properties": {
+        "problem_statement": {
+          "type": "string"
+        },
+        "proposed_solution": {
+          "type": "string"
+        },
+        "expected_outcomes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "target_audience": {
+          "type": "string"
+        },
+        "value_proposition": {
+          "type": "string"
+        }
+      }
+    },
+    "objectives": {
+      "type": "object",
+      "required": ["business_objectives", "product_goals", "success_metrics"],
+      "properties": {
+        "business_objectives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/objective"
+          }
+        },
+        "product_goals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/objective"
+          }
+        },
+        "success_metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/success_metric"
+          }
+        }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "required": ["id", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "aligned_with": {
+          "type": "string"
+        }
+      }
+    },
+    "success_metric": {
+      "type": "object",
+      "required": ["id", "name", "description", "metric", "target"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "current_baseline": {
+          "type": "string"
+        },
+        "measurement_method": {
+          "type": "string"
+        }
+      }
+    },
+    "persona": {
+      "type": "object",
+      "required": ["id", "name", "role", "description", "goals", "pain_points"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pain_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "behaviors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "technical_proficiency": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "expert"]
+        },
+        "demographics": {
+          "$ref": "#/$defs/demographics"
+        },
+        "motivations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "frustrations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preferred_channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quote": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "is_primary": {
+          "type": "boolean"
+        }
+      }
+    },
+    "demographics": {
+      "type": "object",
+      "properties": {
+        "age_range": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "industry": {
+          "type": "string"
+        },
+        "company_size": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "string"
+        }
+      }
+    },
+    "user_story": {
+      "type": "object",
+      "required": ["id", "persona_id", "title", "story", "acceptance_criteria", "priority", "phase_id"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "persona_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "story": {
+          "type": "string",
+          "description": "Format: As a [persona], I want [goal] so that [reason]"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptance_criterion"
+          }
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "phase_id": {
+          "type": "string"
+        },
+        "story_points": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "epic": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "acceptance_criterion": {
+      "type": "object",
+      "required": ["id", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "given": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string"
+        },
+        "then": {
+          "type": "string"
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "required": ["functional", "non_functional"],
+      "properties": {
+        "functional": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/functional_requirement"
+          }
+        },
+        "non_functional": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_functional_requirement"
+          }
+        }
+      }
+    },
+    "functional_requirement": {
+      "type": "object",
+      "required": ["id", "title", "description", "category", "priority", "user_story_ids", "acceptance_criteria", "phase_id"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["must", "should", "could", "wont"]
+        },
+        "user_story_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptance_criterion"
+          }
+        },
+        "phase_id": {
+          "type": "string"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "non_functional_requirement": {
+      "type": "object",
+      "required": ["id", "category", "title", "description", "metric", "target", "priority", "phase_id"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "performance",
+            "scalability",
+            "reliability",
+            "availability",
+            "security",
+            "multi_tenancy",
+            "observability",
+            "maintainability",
+            "usability",
+            "compatibility",
+            "compliance",
+            "disaster_recovery",
+            "cost_efficiency",
+            "portability",
+            "testability",
+            "extensibility",
+            "interoperability",
+            "localization"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "metric": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "measurement_method": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["must", "should", "could", "wont"]
+        },
+        "phase_id": {
+          "type": "string"
+        },
+        "current_baseline": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "slo": {
+          "$ref": "#/$defs/slo_spec"
+        },
+        "multi_tenancy": {
+          "$ref": "#/$defs/multi_tenancy_spec"
+        },
+        "security": {
+          "$ref": "#/$defs/security_spec"
+        }
+      }
+    },
+    "slo_spec": {
+      "type": "object",
+      "required": ["sli", "slo_target", "window"],
+      "properties": {
+        "sli": {
+          "type": "string"
+        },
+        "slo_target": {
+          "type": "string"
+        },
+        "window": {
+          "type": "string"
+        },
+        "error_budget": {
+          "type": "string"
+        },
+        "consequences": {
+          "type": "string"
+        },
+        "alert_threshold": {
+          "type": "string"
+        }
+      }
+    },
+    "multi_tenancy_spec": {
+      "type": "object",
+      "required": ["isolation_model", "data_segregation"],
+      "properties": {
+        "isolation_model": {
+          "type": "string",
+          "enum": ["pool", "silo", "bridge"]
+        },
+        "data_segregation": {
+          "type": "string",
+          "enum": ["shared_schema", "schema_per_tenant", "database_per_tenant"]
+        },
+        "encryption_model": {
+          "type": "string",
+          "enum": ["shared_keys", "tenant_specific_keys", "byok"]
+        },
+        "network_isolation": {
+          "type": "string",
+          "enum": ["shared", "vpc_per_tenant", "namespace_isolation"]
+        },
+        "noisy_neighbor_protection": {
+          "type": "string"
+        }
+      }
+    },
+    "security_spec": {
+      "type": "object",
+      "properties": {
+        "authentication_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorization_model": {
+          "type": "string"
+        },
+        "encryption_at_rest": {
+          "type": "boolean"
+        },
+        "encryption_in_transit": {
+          "type": "boolean"
+        },
+        "compliance_standards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vulnerability_scanning": {
+          "type": "boolean"
+        },
+        "penetration_testing": {
+          "type": "boolean"
+        },
+        "security_audit_frequency": {
+          "type": "string"
+        }
+      }
+    },
+    "roadmap": {
+      "type": "object",
+      "required": ["phases"],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/phase"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "required": ["id", "name", "type", "goals", "deliverables", "success_criteria"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["generic", "quarter", "month", "sprint", "milestone"]
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deliverables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/deliverable"
+          }
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/risk"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "in_progress", "completed", "delayed", "cancelled"]
+        },
+        "progress": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "deliverable": {
+      "type": "object",
+      "required": ["id", "title", "description", "type"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["feature", "documentation", "infrastructure", "integration", "milestone"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["not_started", "in_progress", "completed", "blocked"]
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "required": ["id", "description", "probability", "impact", "mitigation"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "probability": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "impact": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "mitigated", "accepted", "closed"]
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "assumptions_constraints": {
+      "type": "object",
+      "required": ["assumptions", "constraints"],
+      "properties": {
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assumption"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/constraint"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          }
+        }
+      }
+    },
+    "assumption": {
+      "type": "object",
+      "required": ["id", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string"
+        },
+        "validated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["id", "type", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["technical", "budget", "timeline", "regulatory", "resource", "legal"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "mitigation": {
+          "type": "string"
+        }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "due_date": {
+          "type": "string"
+        }
+      }
+    },
+    "technical_architecture": {
+      "type": "object",
+      "required": ["overview"],
+      "properties": {
+        "overview": {
+          "type": "string"
+        },
+        "system_diagram": {
+          "type": "string"
+        },
+        "data_model": {
+          "type": "string"
+        },
+        "integration_points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/integration"
+          }
+        },
+        "technology_stack": {
+          "$ref": "#/$defs/technology_stack"
+        },
+        "security_design": {
+          "type": "string"
+        },
+        "scalability_design": {
+          "type": "string"
+        }
+      }
+    },
+    "integration": {
+      "type": "object",
+      "required": ["id", "name", "type", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "auth_method": {
+          "type": "string"
+        },
+        "data_format": {
+          "type": "string"
+        },
+        "rate_limit": {
+          "type": "string"
+        },
+        "documentation": {
+          "type": "string"
+        }
+      }
+    },
+    "technology_stack": {
+      "type": "object",
+      "properties": {
+        "frontend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        },
+        "backend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        },
+        "database": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        },
+        "infrastructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        },
+        "monitoring": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technology"
+          }
+        }
+      }
+    },
+    "technology": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ux_requirements": {
+      "type": "object",
+      "properties": {
+        "design_principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wireframes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/wireframe"
+          }
+        },
+        "interaction_flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/interaction_flow"
+          }
+        },
+        "accessibility": {
+          "$ref": "#/$defs/accessibility_spec"
+        },
+        "brand_guidelines": {
+          "type": "string"
+        },
+        "design_system": {
+          "type": "string"
+        }
+      }
+    },
+    "wireframe": {
+      "type": "object",
+      "required": ["id", "title", "url"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "interaction_flow": {
+      "type": "object",
+      "required": ["id", "title", "description", "steps"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "diagram_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "accessibility_spec": {
+      "type": "object",
+      "required": ["standard"],
+      "properties": {
+        "standard": {
+          "type": "string"
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "testing_approach": {
+          "type": "string"
+        }
+      }
+    },
+    "glossary_term": {
+      "type": "object",
+      "required": ["term", "definition"],
+      "properties": {
+        "term": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "acronym": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "custom_section": {
+      "type": "object",
+      "required": ["id", "title", "content"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "content": {},
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "problem_definition": {
+      "type": "object",
+      "required": ["statement"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this problem"
+        },
+        "statement": {
+          "type": "string",
+          "description": "The problem statement"
+        },
+        "user_impact": {
+          "type": "string",
+          "description": "How users are affected by this problem"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "description": "Supporting evidence"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence level in the problem definition (0.0-1.0)"
+        },
+        "root_causes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Underlying causes of the problem"
+        },
+        "affected_segments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "User segments affected by this problem"
+        },
+        "secondary_problems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/problem_definition"
+          },
+          "description": "Related or secondary problems"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["type", "source"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["interview", "survey", "analytics", "support_ticket", "market_research", "assumption"],
+          "description": "Evidence type"
+        },
+        "source": {
+          "type": "string",
+          "description": "Where the evidence came from"
+        },
+        "summary": {
+          "type": "string",
+          "description": "What the evidence shows"
+        },
+        "sample_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of data points (for quantitative evidence)"
+        },
+        "strength": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "How strong the evidence is"
+        },
+        "date": {
+          "type": "string",
+          "description": "When the evidence was collected"
+        }
+      }
+    },
+    "market_definition": {
+      "type": "object",
+      "properties": {
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/alternative"
+          },
+          "description": "Competing products, workarounds, or alternative approaches"
+        },
+        "differentiation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "How this solution differs from alternatives"
+        },
+        "market_risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Risks related to market conditions or competition"
+        }
+      }
+    },
+    "alternative": {
+      "type": "object",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this alternative"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the alternative"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["competitor", "workaround", "do_nothing", "internal_tool"],
+          "description": "Type of alternative"
+        },
+        "description": {
+          "type": "string",
+          "description": "Details about the alternative"
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Advantages of this alternative"
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Disadvantages of this alternative"
+        },
+        "why_not_chosen": {
+          "type": "string",
+          "description": "Why this alternative was not selected"
+        }
+      }
+    },
+    "solution_definition": {
+      "type": "object",
+      "properties": {
+        "solution_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/solution_option"
+          },
+          "description": "Possible solutions considered"
+        },
+        "selected_solution_id": {
+          "type": "string",
+          "description": "ID of the chosen solution"
+        },
+        "solution_rationale": {
+          "type": "string",
+          "description": "Why the selected solution was chosen"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence level in the solution (0.0-1.0)"
+        }
+      }
+    },
+    "solution_option": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this solution option"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of this solution option"
+        },
+        "description": {
+          "type": "string",
+          "description": "Details about the solution"
+        },
+        "problems_addressed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Problem IDs this solution addresses"
+        },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Advantages of this solution"
+        },
+        "tradeoffs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Compromises or downsides of this solution"
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Potential risks of this solution"
+        },
+        "estimated_effort": {
+          "type": "string",
+          "description": "High-level effort estimate"
+        }
+      }
+    },
+    "decisions_definition": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision_record"
+          },
+          "description": "Decision records"
+        }
+      }
+    },
+    "decision_record": {
+      "type": "object",
+      "required": ["id", "decision"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this decision"
+        },
+        "decision": {
+          "type": "string",
+          "description": "The decision that was made"
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Why this decision was made"
+        },
+        "alternatives_considered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Other options that were evaluated"
+        },
+        "made_by": {
+          "type": "string",
+          "description": "Person or group who made the decision"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the decision was made"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["proposed", "accepted", "superseded", "deprecated"],
+          "description": "Current status of the decision"
+        },
+        "related_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs of related items (requirements, risks, etc.)"
+        }
+      }
+    },
+    "reviews_definition": {
+      "type": "object",
+      "properties": {
+        "review_board_summary": {
+          "type": "string",
+          "description": "Summary from the review board"
+        },
+        "quality_scores": {
+          "$ref": "#/$defs/quality_scores",
+          "description": "Scores across quality dimensions"
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["approve", "revise", "reject", "human_review"],
+          "description": "Review decision"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          },
+          "description": "Issues that block approval"
+        },
+        "revision_triggers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/revision_trigger"
+          },
+          "description": "Issues requiring revision"
+        }
+      }
+    },
+    "quality_scores": {
+      "type": "object",
+      "properties": {
+        "problem_definition": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for problem definition (0-10)"
+        },
+        "user_understanding": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for user understanding (0-10)"
+        },
+        "market_awareness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for market awareness (0-10)"
+        },
+        "solution_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for solution fit (0-10)"
+        },
+        "scope_discipline": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for scope discipline (0-10)"
+        },
+        "requirements_quality": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for requirements quality (0-10)"
+        },
+        "ux_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for UX coverage (0-10)"
+        },
+        "technical_feasibility": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for technical feasibility (0-10)"
+        },
+        "metrics_quality": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for metrics quality (0-10)"
+        },
+        "risk_management": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Score for risk management (0-10)"
+        },
+        "overall_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Overall weighted score (0-10)"
+        }
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "required": ["id", "category", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this blocker"
+        },
+        "category": {
+          "type": "string",
+          "description": "Scoring category related to this blocker"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the blocking issue"
+        }
+      }
+    },
+    "revision_trigger": {
+      "type": "object",
+      "required": ["issue_id", "category", "severity"],
+      "properties": {
+        "issue_id": {
+          "type": "string",
+          "description": "Unique identifier for this issue"
+        },
+        "category": {
+          "type": "string",
+          "description": "Scoring category related to this issue"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["blocker", "major", "minor"],
+          "description": "Severity of the issue"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the issue"
+        },
+        "recommended_owner": {
+          "type": "string",
+          "description": "Suggested agent/person to address this issue"
+        }
+      }
+    },
+    "revision_record": {
+      "type": "object",
+      "required": ["version", "changes", "trigger", "date"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version number after this revision"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What changed in this revision"
+        },
+        "trigger": {
+          "type": "string",
+          "enum": ["initial", "review", "score", "human"],
+          "description": "What triggered this revision"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this revision was made"
+        },
+        "author": {
+          "type": "string",
+          "description": "Who made this revision"
+        }
+      }
+    },
+    "goals_alignment": {
+      "type": "object",
+      "properties": {
+        "v2mom_ref": {
+          "$ref": "#/$defs/goal_reference",
+          "description": "Reference to an external V2MOM document"
+        },
+        "v2mom": {
+          "type": "object",
+          "description": "Embedded V2MOM document (see structured-goals schema)"
+        },
+        "okr_ref": {
+          "$ref": "#/$defs/goal_reference",
+          "description": "Reference to an external OKR document"
+        },
+        "okr": {
+          "type": "object",
+          "description": "Embedded OKR document (see structured-goals schema)"
+        },
+        "aligned_objectives": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Maps PRD objective IDs to goal/method/objective IDs"
+        }
+      }
+    },
+    "goal_reference": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the goals document"
+        },
+        "path": {
+          "type": "string",
+          "description": "File path to the goals document"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the goals document (e.g., Confluence, Notion)"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the goals document this PRD aligns with"
+        }
+      }
+    }
+  }
+}

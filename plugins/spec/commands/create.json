@@ -1,0 +1,37 @@
+{
+  "name": "create",
+  "description": "Create a new PRD interactively with guided workflow",
+  "arguments": [
+    {
+      "name": "title",
+      "description": "PRD title (optional, will be prompted if not provided)",
+      "required": false
+    }
+  ],
+  "instructions": "Guide the user through creating a comprehensive PRD.\n\n## Process\n\n1. **Initialize**: Create PRD.json with `prd_init`\n2. **Problem Discovery**: Ask probing questions about the problem\n   - What evidence exists for this problem?\n   - Who experiences this problem?\n   - What's the impact if unsolved?\n3. **User Definition**: Define target personas\n   - Name, role, archetype\n   - Key pain points\n   - Current workarounds\n4. **Scope Setting**: Establish goals and non-goals\n   - SMART goals with metrics\n   - Explicit non-goals to prevent scope creep\n5. **Solution Exploration**: Explore 2-3 options\n   - Pros, cons, tradeoffs\n   - Cost and complexity estimates\n   - Select with documented rationale\n6. **Requirements**: Document functional requirements\n   - Priority (P0-P2)\n   - Acceptance criteria\n   - Traceability to goals\n7. **Metrics**: Define success criteria\n   - One North Star metric\n   - Supporting metrics\n   - Guardrail metrics\n8. **Risks**: Identify and mitigate risks\n   - Impact and likelihood\n   - Mitigation strategy\n   - Owner assignment\n9. **Validate**: Score the completed PRD\n   - Aim for >= 8.0 score\n   - Address any blockers",
+  "process": [
+    "Initialize PRD with title and owner",
+    "Discover and document the primary problem",
+    "Define 1-3 user personas with pain points",
+    "Set SMART goals and explicit non-goals",
+    "Explore 2-3 solution options",
+    "Select solution with documented rationale",
+    "Document functional requirements with acceptance criteria",
+    "Define North Star and supporting metrics",
+    "Identify risks with mitigation strategies",
+    "Validate and score the final document"
+  ],
+  "dependencies": ["prdtool-mcp"],
+  "examples": [
+    {
+      "description": "Create PRD with title",
+      "input": "/prdtool:create User Authentication",
+      "output": "Starts guided PRD creation for 'User Authentication'"
+    },
+    {
+      "description": "Create PRD interactively",
+      "input": "/prdtool:create",
+      "output": "Prompts for title then starts guided creation"
+    }
+  ]
+}

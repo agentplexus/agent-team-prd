@@ -1,0 +1,12 @@
+{
+  "name": "prdtool",
+  "version": "1.0.0",
+  "description": "Create, validate, score, and manage Product Requirements Documents with AI assistance. Provides MCP tools for the complete PRD lifecycle.",
+  "author": "agentplexus",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/agentplexus/agent-team-prd",
+  "homepage": "https://github.com/agentplexus/agent-team-prd",
+  "commands": "./commands/",
+  "skills": "./skills/",
+  "agents": "./agents/"
+}

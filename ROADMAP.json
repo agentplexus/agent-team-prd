@@ -1,0 +1,573 @@
+{
+  "ir_version": "1.0",
+  "project": "PRD Agent Team",
+  "repository": "https://github.com/agentplexus/agent-team-prd",
+
+  "legend": {
+    "completed": {"emoji": "✅", "description": "Completed"},
+    "in_progress": {"emoji": "🚧", "description": "In Progress"},
+    "planned": {"emoji": "📋", "description": "Planned"},
+    "future": {"emoji": "💡", "description": "Under Consideration"}
+  },
+
+  "areas": [
+    {"id": "spec", "name": "Multi-Agent Spec", "priority": 1},
+    {"id": "prd-types", "name": "PRD Types & Scoring", "priority": 2},
+    {"id": "cli", "name": "CLI & MCP Server", "priority": 3},
+    {"id": "workflow", "name": "Agent Workflow", "priority": 4},
+    {"id": "runtime", "name": "Runtime Execution", "priority": 5},
+    {"id": "hitl", "name": "Human-in-the-Loop", "priority": 6},
+    {"id": "ai-assist", "name": "AI Assistant Integration", "priority": 7},
+    {"id": "production", "name": "Production Features", "priority": 8}
+  ],
+
+  "phases": [
+    {
+      "id": "v0.1",
+      "name": "v0.1.0 - Multi-Agent Spec",
+      "status": "completed",
+      "order": 1,
+      "description": "Define 16 PRD agents with DAG workflow in multi-agent-spec format"
+    },
+    {
+      "id": "v0.2",
+      "name": "v0.2.0 - CLI Generation",
+      "status": "completed",
+      "order": 2,
+      "description": "Generate standalone Cobra CLI from multi-agent-spec via agentkit"
+    },
+    {
+      "id": "v0.3",
+      "name": "v0.3.0 - PRD Types & Tooling",
+      "status": "completed",
+      "order": 3,
+      "description": "PRD types from structured-requirements, scoring, views, prdtool CLI, MCP server"
+    },
+    {
+      "id": "v0.4",
+      "name": "v0.4.0 - Agent Workflow",
+      "status": "planned",
+      "order": 4,
+      "description": "Implement intake, scoring-driven questions, and iteration loop"
+    },
+    {
+      "id": "v0.5",
+      "name": "v0.5.0 - Runtime Execution",
+      "status": "planned",
+      "order": 5,
+      "description": "Implement LLM client, embedded agents, and DAG executor"
+    },
+    {
+      "id": "v0.6",
+      "name": "v0.6.0 - AI Assistant Ready",
+      "status": "planned",
+      "order": 6,
+      "description": "Full integration with Kiro, Claude Code, and Cursor"
+    },
+    {
+      "id": "v1.0",
+      "name": "v1.0.0 - Production Ready",
+      "status": "planned",
+      "order": 7,
+      "description": "Production-ready PRD generation with quality scoring and revision loops"
+    },
+    {
+      "id": "future",
+      "name": "Future",
+      "status": "future",
+      "order": 99,
+      "description": "Post v1.0 enhancements"
+    }
+  ],
+
+  "items": [
+    {
+      "id": "agent-specs",
+      "title": "16 PRD agent specifications",
+      "description": "Define all agents: prd-lead, problem-discovery, user-research, market-intel, solution-ideation, requirements, ux-journey, tech-feasibility, metrics-success, risk-compliance, review-board, prd-scoring, exec-explainability, issue-extractor, revision-planner, change-validator",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "spec",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "team-spec",
+      "title": "Team specification with DAG workflow",
+      "description": "prd-team.json with 16 agents, DAG workflow, inputs/outputs, orchestrator",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "spec",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "agent-instructions",
+      "title": "Agent instruction markdown files",
+      "description": "Detailed prompts with YAML frontmatter for each agent",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "spec",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "agentkit-generator",
+      "title": "Code generation via agentkit",
+      "description": "agentkit generate command creates Cobra CLI from multi-agent-spec",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "cli",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "cobra-cli",
+      "title": "Generated Cobra CLI structure",
+      "description": "run, resume, agent run/list, prereqs check, creds check, describe, respond commands",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "cli",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "markdown-frontmatter",
+      "title": "Markdown agent parsing",
+      "description": "Parse agent specs from markdown files with YAML frontmatter",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "cli",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "prereq-validation",
+      "title": "CLI prerequisite validation",
+      "description": "Check required CLI tools (gh, git, jq) before execution",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "cli",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "credential-validation",
+      "title": "Credential validation via omnivault",
+      "description": "Validate credentials using omnivault URI resolution (env://, op://, aws-sm://)",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "cli",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "describe-command",
+      "title": "AI assistant discovery command",
+      "description": "describe team --json outputs structured info for AI assistants",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "ai-assist",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "hitl-respond",
+      "title": "Human-in-the-loop respond command",
+      "description": "respond command for providing human input to paused workflows",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "hitl",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "hitl-state",
+      "title": "HITL state management",
+      "description": "StepWaitingHITL status, HITLRequest/Response in execution state",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "hitl",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "structured-requirements-types",
+      "title": "PRD types from structured-requirements",
+      "description": "Use grokify/structured-requirements as source of truth for PRD/MRD/TRD types via type aliases",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "prd-types",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "prd-scoring",
+      "title": "10-category PRD scoring",
+      "description": "Score PRDs across problem definition, solution fit, user understanding, market awareness, scope discipline, requirements quality, metrics quality, UX coverage, technical feasibility, risk management",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "prd-types",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "prd-views",
+      "title": "PRD view generation",
+      "description": "Generate PM view and Executive view with markdown rendering",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "prd-types",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "persona-library",
+      "title": "Persona library for reusable personas",
+      "description": "PersonaLibrary type with CRUD, import/export between library and PRDs, usage tracking",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "prd-types",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "prdtool-cli",
+      "title": "prdtool CLI for PRD management",
+      "description": "Commands: init, show, validate, score, add (problem, persona, goal, solution, requirement, risk, decision)",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "cli",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "mcp-server",
+      "title": "MCP server for PRD operations",
+      "description": "Model Context Protocol server exposing PRD CRUD via mcpkit/runtime",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "cli",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "persona-cli",
+      "title": "Persona library CLI commands",
+      "description": "prdtool persona list/add/show/import/export commands for managing persona library",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "cli",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "file-intake",
+      "title": "File intake and parsing",
+      "description": "Import existing docs, research, notes and extract PRD data automatically",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "scoring-gap-analysis",
+      "title": "Scoring-driven gap analysis",
+      "description": "Map low category scores to specific questions for each agent domain",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "interactive-qa",
+      "title": "Interactive question session",
+      "description": "Agent-led Q&A to fill PRD gaps based on scoring analysis",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "iteration-loop",
+      "title": "Score-question-update iteration loop",
+      "description": "Iterate until PRD score reaches approval threshold (>=8.0)",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "workflow-orchestrator",
+      "title": "Workflow orchestrator",
+      "description": "Coordinate intake -> score -> question -> update -> repeat flow",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "omnillm-client",
+      "title": "OmniLLM client integration",
+      "description": "Multi-provider LLM client (Anthropic, OpenAI, Gemini, xAI, Ollama)",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "runtime",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "embedded-agent",
+      "title": "Embedded agent implementation",
+      "description": "EmbeddedAgent struct with Invoke method for in-process execution",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "runtime",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "dag-executor",
+      "title": "DAG workflow executor",
+      "description": "Execute workflow steps based on dependency graph with parallelism",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "runtime",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "tool-implementations",
+      "title": "Tool implementations",
+      "description": "Read, Write, Glob, Grep, Shell tool implementations",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "runtime",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "state-persistence",
+      "title": "Execution state persistence",
+      "description": "FileStateBackend for resumable workflows",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "runtime",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "kiro-integration",
+      "title": "Kiro CLI integration",
+      "description": "Documentation and examples for using prd-cli with Kiro",
+      "status": "planned",
+      "version": "0.6.0",
+      "phase": "v0.6",
+      "area": "ai-assist",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "claude-code-integration",
+      "title": "Claude Code integration",
+      "description": "Plugin structure for Claude Code marketplace",
+      "status": "planned",
+      "version": "0.6.0",
+      "phase": "v0.6",
+      "area": "ai-assist",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "cursor-integration",
+      "title": "Cursor integration",
+      "description": "Documentation and examples for using prd-cli with Cursor",
+      "status": "planned",
+      "version": "0.6.0",
+      "phase": "v0.6",
+      "area": "ai-assist",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "interactive-hitl",
+      "title": "Interactive HITL mode",
+      "description": "Synchronous stdin/stdout prompting for human input",
+      "status": "planned",
+      "version": "0.6.0",
+      "phase": "v0.6",
+      "area": "hitl",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "revision-loops",
+      "title": "Automated revision loops",
+      "description": "Iterative PRD improvement based on review feedback",
+      "status": "planned",
+      "version": "1.0.0",
+      "phase": "v1.0",
+      "area": "production",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "prd-templates",
+      "title": "PRD output templates",
+      "description": "Configurable output formats (Markdown, JSON, Notion, Confluence)",
+      "status": "planned",
+      "version": "1.0.0",
+      "phase": "v1.0",
+      "area": "production",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "metrics-dashboard",
+      "title": "PRD metrics dashboard",
+      "description": "Track PRD quality metrics over time",
+      "status": "future",
+      "phase": "future",
+      "area": "production",
+      "type": "Added",
+      "priority": "low"
+    },
+    {
+      "id": "team-collaboration",
+      "title": "Multi-user collaboration",
+      "description": "Support multiple humans providing HITL input",
+      "status": "future",
+      "phase": "future",
+      "area": "hitl",
+      "type": "Added",
+      "priority": "low"
+    },
+    {
+      "id": "structured-requirements-rename",
+      "title": "Rename structured-prd to structured-requirements",
+      "description": "Renamed grokify/structured-prd to grokify/structured-requirements for broader applicability",
+      "status": "completed",
+      "phase": "v0.3",
+      "area": "prd-types",
+      "type": "Changed",
+      "priority": "low",
+      "version": "0.3.0"
+    }
+  ],
+
+  "sections": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "order": 1,
+      "content": [
+        {"type": "text", "value": "PRD Agent Team is a multi-agent system for creating, reviewing, scoring, and iteratively improving Product Requirements Documents (PRDs). It uses 16 specialized agents coordinated via DAG workflow to produce high-quality PRDs with automated revision loops."}
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "Architecture",
+      "order": 2,
+      "content": [
+        {"type": "text", "value": "The system consists of multiple layers:"},
+        {"type": "list", "items": [
+          "**structured-requirements**: Core PRD/MRD/TRD types, scoring, views, persona library (grokify/structured-requirements)",
+          "**Multi-Agent Spec**: Platform-agnostic agent and team definitions in JSON/Markdown",
+          "**agentkit**: Code generator that produces standalone Cobra CLIs from specs",
+          "**prdtool**: CLI for PRD management (init, show, validate, score, add)",
+          "**prdtool-mcp**: MCP server for AI assistant integration"
+        ]},
+        {"type": "text", "value": "This architecture allows the CLI to be used by any AI assistant (Kiro, Claude Code, Cursor) that can execute shell commands or connect via MCP."}
+      ]
+    },
+    {
+      "id": "workflow",
+      "title": "PRD Creation Workflow",
+      "order": 3,
+      "content": [
+        {"type": "text", "value": "The planned workflow for PRD creation:"},
+        {"type": "list", "items": [
+          "**1. Intake**: Import existing docs or start interactive Q&A",
+          "**2. Score**: Run 10-category scoring to identify gaps",
+          "**3. Question**: Agent-led questions for weak categories",
+          "**4. Update**: Incorporate answers into PRD",
+          "**5. Iterate**: Repeat until score >= 8.0 threshold",
+          "**6. Output**: Generate PRD.json, PM view, Exec view"
+        ]}
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agent Overview",
+      "order": 4,
+      "content": [
+        {"type": "text", "value": "The 16 agents are organized into phases:"},
+        {"type": "list", "items": [
+          "**Discovery Phase**: problem-discovery, user-research, market-intel",
+          "**Solution Phase**: solution-ideation",
+          "**Specification Phase**: requirements, ux-journey, tech-feasibility, metrics-success",
+          "**Risk Phase**: risk-compliance",
+          "**Synthesis Phase**: prd-lead",
+          "**Review Phase**: review-board, prd-scoring, exec-explainability",
+          "**Revision Phase**: issue-extractor, revision-planner, change-validator"
+        ]}
+      ]
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "order": 99,
+      "content": [
+        {"type": "list", "items": [
+          "[grokify/structured-requirements](https://github.com/grokify/structured-requirements) - Core PRD types and scoring",
+          "[specs/teams/prd-team.json](specs/teams/prd-team.json) - Team specification",
+          "[specs/agents/](specs/agents/) - Agent definitions",
+          "[agentkit](https://github.com/agentplexus/agentkit) - Code generator"
+        ]}
+      ]
+    }
+  ],
+
+  "version_history": [
+    {"version": "0.1.0", "date": "2026-01-20", "status": "completed", "summary": "Multi-agent spec with 16 agents and DAG workflow"},
+    {"version": "0.2.0", "date": "2026-01-20", "status": "completed", "summary": "CLI generation via agentkit with HITL support"},
+    {"version": "0.3.0", "date": "2026-01-22", "status": "completed", "summary": "PRD types from structured-requirements, scoring, views, prdtool CLI, MCP server, persona library"},
+    {"version": "0.4.0", "date": null, "status": "planned", "summary": "Agent workflow: intake, scoring-driven Q&A, iteration loop"},
+    {"version": "0.5.0", "date": null, "status": "planned", "summary": "Runtime execution with LLM integration"},
+    {"version": "0.6.0", "date": null, "status": "planned", "summary": "AI assistant integration (Kiro, Claude Code, Cursor)"},
+    {"version": "1.0.0", "date": null, "status": "planned", "summary": "Production-ready PRD generation"}
+  ]
+}

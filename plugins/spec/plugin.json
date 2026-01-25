@@ -1,0 +1,37 @@
+{
+  "name": "prdtool",
+  "displayName": "PRD Tool",
+  "version": "1.0.0",
+  "description": "Create, validate, score, and manage Product Requirements Documents with AI assistance. Provides MCP tools for the complete PRD lifecycle.",
+  "author": "agentplexus",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/agentplexus/agent-team-prd",
+  "homepage": "https://github.com/agentplexus/agent-team-prd",
+  "commands": "commands",
+  "skills": "skills",
+  "agents": "agents",
+  "context": "# PRD Tool\n\nThis plugin provides AI-assisted Product Requirements Document (PRD) creation and management.\n\n## Available Commands\n\n- `/prdtool:create` - Create a new PRD interactively\n- `/prdtool:review` - Review and score an existing PRD\n- `/prdtool:exec-summary` - Generate executive summary\n\n## MCP Server\n\nThe prdtool-mcp server provides these tools:\n\n- `prd_init` - Initialize a new PRD\n- `prd_load` - Load PRD contents\n- `prd_validate` - Validate structure\n- `prd_score` - Score quality (0-10)\n- `prd_view` - Generate views\n- `prd_add_*` - Add content sections\n\n## Quality Scoring\n\nPRDs are scored across 10 categories:\n\n- Problem Definition (20%)\n- Solution Fit (15%)\n- User Understanding (10%)\n- Market Awareness (10%)\n- Scope Discipline (10%)\n- Requirements Quality (10%)\n- Metrics Quality (10%)\n- UX Coverage (5%)\n- Technical Feasibility (5%)\n- Risk Management (5%)\n\n## Dependencies\n\n- `prdtool-mcp` - MCP server for PRD operations\n- `prdtool` - CLI tool (optional)",
+  "keywords": [
+    "prd",
+    "product requirements",
+    "requirements document",
+    "product spec",
+    "feature spec",
+    "problem statement",
+    "user persona",
+    "success metrics",
+    "north star",
+    "acceptance criteria"
+  ],
+  "mcpServers": {
+    "prdtool": {
+      "command": "prdtool-mcp",
+      "args": [],
+      "description": "PRD lifecycle tools including init, validate, score, and content management"
+    }
+  },
+  "dependencies": [
+    {"name": "prdtool-mcp", "command": "prdtool-mcp"},
+    {"name": "prdtool", "command": "prdtool", "optional": true}
+  ]
+}

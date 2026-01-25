@@ -1,0 +1,510 @@
+{
+  "$schema": "https://raw.githubusercontent.com/agentplexus/multi-agent-spec/main/schema/orchestration/team.schema.json",
+  "name": "prd-agent-team",
+  "version": "1.0.0",
+  "description": "A multi-agent team for creating, reviewing, scoring, and iteratively improving Product Requirements Documents (PRDs) with automated revision loops.",
+  "agents": [
+    "prd-lead",
+    "problem-discovery",
+    "user-research",
+    "market-intel",
+    "solution-ideation",
+    "requirements",
+    "ux-journey",
+    "tech-feasibility",
+    "metrics-success",
+    "risk-compliance",
+    "review-board",
+    "prd-scoring",
+    "exec-explainability",
+    "issue-extractor",
+    "revision-planner",
+    "change-validator"
+  ],
+  "orchestrator": "prd-lead",
+  "workflow": {
+    "type": "dag",
+    "steps": [
+      {
+        "name": "discovery-problem",
+        "agent": "problem-discovery",
+        "outputs": [
+          {
+            "name": "problem_definition",
+            "type": "object",
+            "description": "Primary and secondary problems with evidence"
+          },
+          {
+            "name": "user_segments",
+            "type": "array",
+            "description": "Identified user segments"
+          },
+          {
+            "name": "jobs_to_be_done",
+            "type": "array",
+            "description": "JTBD statements"
+          }
+        ]
+      },
+      {
+        "name": "discovery-users",
+        "agent": "user-research",
+        "outputs": [
+          {
+            "name": "personas",
+            "type": "array",
+            "description": "User personas with pain points and behaviors"
+          },
+          {
+            "name": "research_gaps",
+            "type": "array",
+            "description": "Identified research gaps"
+          }
+        ]
+      },
+      {
+        "name": "discovery-market",
+        "agent": "market-intel",
+        "outputs": [
+          {
+            "name": "alternatives",
+            "type": "array",
+            "description": "Competitors and alternatives"
+          },
+          {
+            "name": "differentiation",
+            "type": "array",
+            "description": "Differentiation opportunities"
+          },
+          {
+            "name": "market_risks",
+            "type": "array",
+            "description": "Market-related risks"
+          }
+        ]
+      },
+      {
+        "name": "solution-design",
+        "agent": "solution-ideation",
+        "depends_on": ["discovery-problem", "discovery-users", "discovery-market"],
+        "inputs": [
+          {
+            "name": "problem_definition",
+            "type": "object",
+            "from": "discovery-problem.problem_definition",
+            "description": "Problems to solve"
+          },
+          {
+            "name": "personas",
+            "type": "array",
+            "from": "discovery-users.personas",
+            "description": "Target users"
+          },
+          {
+            "name": "differentiation",
+            "type": "array",
+            "from": "discovery-market.differentiation",
+            "description": "Differentiation opportunities"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "solution_options",
+            "type": "array",
+            "description": "Proposed solution options"
+          },
+          {
+            "name": "recommended_solution",
+            "type": "object",
+            "description": "Recommended solution with rationale"
+          },
+          {
+            "name": "non_goals",
+            "type": "array",
+            "description": "Explicit non-goals"
+          }
+        ]
+      },
+      {
+        "name": "spec-requirements",
+        "agent": "requirements",
+        "depends_on": ["solution-design"],
+        "inputs": [
+          {
+            "name": "solution",
+            "type": "object",
+            "from": "solution-design.recommended_solution",
+            "description": "Selected solution to specify"
+          },
+          {
+            "name": "problem_definition",
+            "type": "object",
+            "from": "discovery-problem.problem_definition",
+            "description": "Problems for traceability"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "functional_requirements",
+            "type": "array",
+            "description": "Functional requirements"
+          },
+          {
+            "name": "non_functional_requirements",
+            "type": "array",
+            "description": "NFRs"
+          }
+        ]
+      },
+      {
+        "name": "spec-ux",
+        "agent": "ux-journey",
+        "depends_on": ["solution-design"],
+        "inputs": [
+          {
+            "name": "solution",
+            "type": "object",
+            "from": "solution-design.recommended_solution",
+            "description": "Solution to map journeys for"
+          },
+          {
+            "name": "personas",
+            "type": "array",
+            "from": "discovery-users.personas",
+            "description": "Personas for journeys"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "user_journeys",
+            "type": "array",
+            "description": "User journeys with edge cases"
+          },
+          {
+            "name": "ux_risks",
+            "type": "array",
+            "description": "UX-related risks"
+          }
+        ]
+      },
+      {
+        "name": "spec-technical",
+        "agent": "tech-feasibility",
+        "depends_on": ["solution-design", "spec-requirements"],
+        "inputs": [
+          {
+            "name": "solution",
+            "type": "object",
+            "from": "solution-design.recommended_solution",
+            "description": "Solution to assess"
+          },
+          {
+            "name": "requirements",
+            "type": "array",
+            "from": "spec-requirements.functional_requirements",
+            "description": "Requirements to validate"
+          },
+          {
+            "name": "nfrs",
+            "type": "array",
+            "from": "spec-requirements.non_functional_requirements",
+            "description": "NFRs to assess"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "technical_assessment",
+            "type": "object",
+            "description": "Technical feasibility assessment"
+          },
+          {
+            "name": "technical_risks",
+            "type": "array",
+            "description": "Technical risks"
+          },
+          {
+            "name": "requirement_feedback",
+            "type": "array",
+            "description": "Feedback on unrealistic requirements"
+          }
+        ]
+      },
+      {
+        "name": "spec-metrics",
+        "agent": "metrics-success",
+        "depends_on": ["solution-design"],
+        "inputs": [
+          {
+            "name": "solution",
+            "type": "object",
+            "from": "solution-design.recommended_solution",
+            "description": "Solution to measure"
+          },
+          {
+            "name": "problem_definition",
+            "type": "object",
+            "from": "discovery-problem.problem_definition",
+            "description": "Problems for outcome metrics"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "north_star",
+            "type": "object",
+            "description": "North Star metric"
+          },
+          {
+            "name": "success_metrics",
+            "type": "array",
+            "description": "Supporting success metrics"
+          },
+          {
+            "name": "guardrail_metrics",
+            "type": "array",
+            "description": "Guardrail metrics"
+          },
+          {
+            "name": "instrumentation_gaps",
+            "type": "array",
+            "description": "Instrumentation gaps"
+          }
+        ]
+      },
+      {
+        "name": "risk-assessment",
+        "agent": "risk-compliance",
+        "depends_on": ["spec-requirements", "spec-ux", "spec-technical", "spec-metrics"],
+        "inputs": [
+          {
+            "name": "requirements",
+            "type": "array",
+            "from": "spec-requirements.functional_requirements",
+            "description": "Requirements for risk assessment"
+          },
+          {
+            "name": "user_journeys",
+            "type": "array",
+            "from": "spec-ux.user_journeys",
+            "description": "UX for risk assessment"
+          },
+          {
+            "name": "technical_assessment",
+            "type": "object",
+            "from": "spec-technical.technical_assessment",
+            "description": "Technical assessment"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "risks",
+            "type": "array",
+            "description": "Identified risks"
+          },
+          {
+            "name": "assumptions",
+            "type": "array",
+            "description": "Key assumptions"
+          },
+          {
+            "name": "open_questions",
+            "type": "array",
+            "description": "Unresolved questions"
+          }
+        ]
+      },
+      {
+        "name": "prd-synthesis",
+        "agent": "prd-lead",
+        "depends_on": ["discovery-problem", "discovery-users", "discovery-market", "solution-design", "spec-requirements", "spec-ux", "spec-technical", "spec-metrics", "risk-assessment"],
+        "outputs": [
+          {
+            "name": "prd",
+            "type": "object",
+            "description": "Complete PRD document"
+          },
+          {
+            "name": "decision_log",
+            "type": "array",
+            "description": "Decisions made during synthesis"
+          }
+        ]
+      },
+      {
+        "name": "review-board",
+        "agent": "review-board",
+        "depends_on": ["prd-synthesis"],
+        "inputs": [
+          {
+            "name": "prd",
+            "type": "object",
+            "from": "prd-synthesis.prd",
+            "description": "PRD to review"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "reviews",
+            "type": "object",
+            "description": "Individual reviewer assessments"
+          },
+          {
+            "name": "aggregated_decision",
+            "type": "object",
+            "description": "Aggregated review decision"
+          }
+        ]
+      },
+      {
+        "name": "quality-scoring",
+        "agent": "prd-scoring",
+        "depends_on": ["prd-synthesis"],
+        "inputs": [
+          {
+            "name": "prd",
+            "type": "object",
+            "from": "prd-synthesis.prd",
+            "description": "PRD to score"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "scores",
+            "type": "object",
+            "description": "Category and weighted scores"
+          },
+          {
+            "name": "decision",
+            "type": "string",
+            "description": "Scoring decision (approve/revise/reject)"
+          },
+          {
+            "name": "revision_triggers",
+            "type": "array",
+            "description": "Issues triggering revision"
+          }
+        ]
+      },
+      {
+        "name": "exec-summary",
+        "agent": "exec-explainability",
+        "depends_on": ["review-board", "quality-scoring"],
+        "inputs": [
+          {
+            "name": "prd",
+            "type": "object",
+            "from": "prd-synthesis.prd",
+            "description": "PRD being summarized"
+          },
+          {
+            "name": "reviews",
+            "type": "object",
+            "from": "review-board.aggregated_decision",
+            "description": "Review board decision"
+          },
+          {
+            "name": "scores",
+            "type": "object",
+            "from": "quality-scoring.scores",
+            "description": "Quality scores"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "exec_summary",
+            "type": "object",
+            "description": "Executive summary"
+          }
+        ]
+      },
+      {
+        "name": "issue-extraction",
+        "agent": "issue-extractor",
+        "depends_on": ["review-board", "quality-scoring"],
+        "inputs": [
+          {
+            "name": "reviews",
+            "type": "object",
+            "from": "review-board.reviews",
+            "description": "Reviewer feedback"
+          },
+          {
+            "name": "revision_triggers",
+            "type": "array",
+            "from": "quality-scoring.revision_triggers",
+            "description": "Scoring issues"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "issues",
+            "type": "array",
+            "description": "Normalized issue list"
+          }
+        ]
+      },
+      {
+        "name": "revision-planning",
+        "agent": "revision-planner",
+        "depends_on": ["issue-extraction"],
+        "inputs": [
+          {
+            "name": "issues",
+            "type": "array",
+            "from": "issue-extraction.issues",
+            "description": "Issues to address"
+          },
+          {
+            "name": "prd",
+            "type": "object",
+            "from": "prd-synthesis.prd",
+            "description": "Current PRD version"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "revision_plan",
+            "type": "array",
+            "description": "Plan for addressing issues"
+          },
+          {
+            "name": "human_decisions_required",
+            "type": "boolean",
+            "description": "Whether human input is needed"
+          }
+        ]
+      },
+      {
+        "name": "change-validation",
+        "agent": "change-validator",
+        "depends_on": ["revision-planning"],
+        "inputs": [
+          {
+            "name": "original_prd",
+            "type": "object",
+            "from": "prd-synthesis.prd",
+            "description": "Original PRD"
+          },
+          {
+            "name": "revision_plan",
+            "type": "array",
+            "from": "revision-planning.revision_plan",
+            "description": "What was supposed to change"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "validation_result",
+            "type": "object",
+            "description": "Validation of changes"
+          },
+          {
+            "name": "ready_for_re_review",
+            "type": "boolean",
+            "description": "Whether PRD can be re-reviewed"
+          }
+        ]
+      }
+    ]
+  },
+  "context": "This team automates the complete PRD lifecycle including problem discovery, user research, market analysis, solution design, requirements specification, UX mapping, technical feasibility, metrics definition, risk assessment, multi-perspective review, quality scoring, and iterative revision. The PRD Lead orchestrates all agents and synthesizes the final document."
+}

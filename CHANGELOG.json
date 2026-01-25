@@ -1,0 +1,41 @@
+{
+  "ir_version": "1.0",
+  "project": "agent-team-prd",
+  "repository": "https://github.com/agentplexus/agent-team-prd",
+  "versioning": "semver",
+  "commit_convention": "conventional",
+  "maintainers": ["agentplexus", "johncwang@gmail.com"],
+  "releases": [
+    {
+      "version": "v0.1.0",
+      "date": "2026-01-25",
+      "highlights": [
+        { "description": "Initial release of agent-team-prd: multi-agent system for PRD creation and review" },
+        { "description": "16 specialized agents for discovery, specification, review, and revision workflows" },
+        { "description": "Integration with github.com/grokify/structured-requirements for PRD schema" }
+      ],
+      "added": [
+        { "description": "prdtool CLI for PRD management: init, validate, score, show, view commands" },
+        { "description": "prdtool-mcp MCP server exposing PRD operations as tools for AI assistants" },
+        { "description": "pkg/prd package wrapping structured-requirements types with helper functions" },
+        { "description": "pkg/scoring package for PRD quality scoring against rubric" },
+        { "description": "pkg/views package for PM and executive view generation" },
+        { "description": "16 agent specifications: problem-discovery, user-research, market-intel, solution-ideation, requirements, ux-journey, tech-feasibility, metrics-success, risk-compliance, prd-lead, review-board, prd-scoring, exec-explainability, issue-extractor, revision-planner, change-validator" },
+        { "description": "Team workflow specification with DAG-based orchestration" },
+        { "description": "Deployment specifications for Claude Code, Kiro, Gemini, ADK, AWS Bedrock, CrewAI, and Kubernetes" },
+        { "description": "prdtool schema command for programmatic JSON Schema access from structured-requirements" },
+        { "description": "prd_schema MCP tool for AI agent schema access" }
+      ],
+      "documentation": [
+        { "description": "MkDocs documentation site configuration" },
+        { "description": "Agent specification markdown files with roles, responsibilities, and output formats" },
+        { "description": "README with project overview and quick start" }
+      ],
+      "dependencies": [
+        { "description": "github.com/grokify/structured-requirements v0.2.0 for PRD types and schema" },
+        { "description": "github.com/agentplexus/mcpkit v0.3.1 for MCP server runtime" },
+        { "description": "github.com/spf13/cobra v1.10.2 for CLI framework" }
+      ]
+    }
+  ]
+}
