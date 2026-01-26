@@ -1,4 +1,4 @@
-# PRD Tool
+# Product Requirements Agent Team
 
 CLI and AI assistant integrations for creating, validating, scoring, and managing Product Requirements Documents.
 
