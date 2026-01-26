@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/fatih/color"
 	"github.com/agentplexus/agent-team-prd/pkg/prd"
 	"github.com/agentplexus/agent-team-prd/pkg/scoring"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 

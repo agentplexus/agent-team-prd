@@ -44,7 +44,7 @@ func runSchema(cmd *cobra.Command, args []string) {
 	schemaJSON := schema.PRDSchema()
 
 	if schemaOutput != "" {
-		if err := os.WriteFile(schemaOutput, []byte(schemaJSON), 0644); err != nil {
+		if err := os.WriteFile(schemaOutput, []byte(schemaJSON), 0600); err != nil {
 			exitWithError("Failed to write schema: %v", err)
 		}
 		fmt.Printf("Schema written to: %s\n", schemaOutput)

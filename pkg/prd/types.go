@@ -87,10 +87,10 @@ const (
 
 // Requirements types
 type (
-	Requirements               = structuredprd.Requirements
-	FunctionalRequirement      = structuredprd.FunctionalRequirement
-	NonFunctionalRequirement   = structuredprd.NonFunctionalRequirement
-	NFRCategory                = structuredprd.NFRCategory
+	Requirements             = structuredprd.Requirements
+	FunctionalRequirement    = structuredprd.FunctionalRequirement
+	NonFunctionalRequirement = structuredprd.NonFunctionalRequirement
+	NFRCategory              = structuredprd.NFRCategory
 )
 
 // NFR category constants

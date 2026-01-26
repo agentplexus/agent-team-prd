@@ -165,7 +165,7 @@ func deployKiroPower() {
 	// Generate POWER.md
 	powerMD := generatePowerMD()
 	powerPath := filepath.Join(outputDir, "POWER.md")
-	if err := os.WriteFile(powerPath, []byte(powerMD), 0644); err != nil {
+	if err := os.WriteFile(powerPath, []byte(powerMD), 0600); err != nil {
 		exitWithError("Failed to write POWER.md: %v", err)
 	}
 	fmt.Printf("Created: %s\n", powerPath)
@@ -190,7 +190,7 @@ func deployKiroPower() {
 	steeringFiles := getSteeringFiles()
 	for name, content := range steeringFiles {
 		steeringPath := filepath.Join(outputDir, "steering", name)
-		if err := os.WriteFile(steeringPath, []byte(content), 0644); err != nil {
+		if err := os.WriteFile(steeringPath, []byte(content), 0600); err != nil {
 			exitWithError("Failed to write steering file %s: %v", name, err)
 		}
 		fmt.Printf("Created: %s\n", steeringPath)
@@ -504,9 +504,9 @@ func findExecutable(name string) (string, error) {
 func getKiroAgents(_ string) map[string]KiroAgentConfig {
 	return map[string]KiroAgentConfig{
 		"prd-creator": {
-			Name:        "prd-creator",
-			Description: "Creates and manages Product Requirements Documents (PRDs)",
-			Tools:       []string{"read", "write", "shell"},
+			Name:         "prd-creator",
+			Description:  "Creates and manages Product Requirements Documents (PRDs)",
+			Tools:        []string{"read", "write", "shell"},
 			AllowedTools: []string{"read"},
 			Prompt: `You are a PRD creation assistant. Help users create comprehensive Product Requirements Documents.
 
@@ -539,9 +539,9 @@ Always validate and score the PRD after significant changes.`,
 			IncludeMcpJson: true,
 		},
 		"prd-reviewer": {
-			Name:        "prd-reviewer",
-			Description: "Reviews and scores PRD quality with improvement suggestions",
-			Tools:       []string{"read"},
+			Name:         "prd-reviewer",
+			Description:  "Reviews and scores PRD quality with improvement suggestions",
+			Tools:        []string{"read"},
 			AllowedTools: []string{"read"},
 			Prompt: `You are a PRD review specialist. Your role is to analyze PRDs and provide actionable feedback.
 
@@ -588,5 +588,5 @@ func writeJSONFile(path string, data interface{}) error {
 		return err
 	}
 
-	return os.WriteFile(path, jsonData, 0644)
+	return os.WriteFile(path, jsonData, 0600)
 }
