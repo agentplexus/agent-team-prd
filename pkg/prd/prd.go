@@ -1,6 +1,7 @@
 package prd
 
 import (
+	"github.com/agentplexus/structured-evaluation/evaluation"
 	structuredprd "github.com/grokify/structured-requirements/prd"
 )
 
@@ -169,4 +170,55 @@ func (r *ValidationResult) addError(field, message string) {
 
 func (r *ValidationResult) addWarning(field, message string) {
 	r.Warnings = append(r.Warnings, ValidationWarning{Field: field, Message: message})
+}
+
+// ============================================================================
+// Evaluation Integration (v0.3.0)
+// ============================================================================
+
+// EvaluationCategory is an alias for the structured-prd evaluation category type.
+type EvaluationCategory = structuredprd.EvaluationCategory
+
+// ScoreToEvaluationReport converts deterministic scoring results to an EvaluationReport.
+// This allows the existing deterministic scoring to output in the standardized format
+// that can be combined with LLM-based evaluations.
+func ScoreToEvaluationReport(prd *PRD, filename string) *evaluation.EvaluationReport {
+	return structuredprd.ScoreToEvaluationReport(prd, filename)
+}
+
+// GenerateEvaluationTemplate creates an EvaluationReport template from a PRD document.
+// The template includes all standard categories plus custom sections.
+// Scores are initialized to zero - they will be filled in by the LLM judge.
+func GenerateEvaluationTemplate(prd *PRD, filename string) *evaluation.EvaluationReport {
+	return structuredprd.GenerateEvaluationTemplate(prd, filename)
+}
+
+// GenerateEvaluationTemplateWithWeights creates a template with custom category weights.
+func GenerateEvaluationTemplateWithWeights(prd *PRD, filename string, weights map[string]float64) *evaluation.EvaluationReport {
+	return structuredprd.GenerateEvaluationTemplateWithWeights(prd, filename, weights)
+}
+
+// StandardCategories returns the standard PRD evaluation categories.
+// These match the sections defined in the PRD schema.
+func StandardCategories() []EvaluationCategory {
+	return structuredprd.StandardCategories()
+}
+
+// CategoryDescriptions returns a map of category IDs to descriptions.
+// Useful for providing context to LLM judges.
+func CategoryDescriptions() map[string]string {
+	return structuredprd.CategoryDescriptions()
+}
+
+// CategoryOwners returns a map of category IDs to suggested owners.
+// Useful for assigning findings to responsible teams.
+func CategoryOwners() map[string]string {
+	return structuredprd.CategoryOwners()
+}
+
+// GetCategoriesFromDocument extracts the list of categories that should be evaluated
+// based on what's present in the document. This includes standard categories and
+// any custom sections defined in the PRD.
+func GetCategoriesFromDocument(prd *PRD) []EvaluationCategory {
+	return structuredprd.GetCategoriesFromDocument(prd)
 }
