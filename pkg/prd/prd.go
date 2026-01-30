@@ -2,7 +2,7 @@ package prd
 
 import (
 	"github.com/agentplexus/structured-evaluation/evaluation"
-	structuredprd "github.com/grokify/structured-requirements/prd"
+	structuredprd "github.com/grokify/structured-plan/requirements/prd"
 )
 
 // DefaultFilename is the standard PRD filename.
@@ -155,9 +155,9 @@ func Validate(prd *PRD) *ValidationResult {
 		result.addWarning("executive_summary.problem_statement", "Problem statement is empty")
 	}
 
-	// Goals
-	if len(prd.Objectives.BusinessObjectives) == 0 && len(prd.Objectives.ProductGoals) == 0 {
-		result.addWarning("objectives", "No business objectives or product goals defined")
+	// Goals (OKR structure)
+	if len(prd.Objectives.OKRs) == 0 {
+		result.addWarning("objectives", "No objectives defined")
 	}
 
 	return result

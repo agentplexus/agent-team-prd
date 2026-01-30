@@ -22,7 +22,7 @@ import (
 	"github.com/agentplexus/agent-team-prd/pkg/scoring"
 	"github.com/agentplexus/agent-team-prd/pkg/views"
 	"github.com/agentplexus/mcpkit/runtime"
-	"github.com/grokify/structured-requirements/schema"
+	"github.com/grokify/structured-plan/schema"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -147,7 +147,7 @@ func registerTools(rt *runtime.Runtime) {
 	// prd_schema
 	runtime.AddTool(rt, &mcp.Tool{
 		Name:        "prd_schema",
-		Description: "Get the canonical PRD JSON Schema from structured-requirements",
+		Description: "Get the canonical PRD JSON Schema from structured-plan",
 	}, handleSchema)
 }
 

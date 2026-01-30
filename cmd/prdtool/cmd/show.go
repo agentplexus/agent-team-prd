@@ -76,10 +76,8 @@ func showAsJSON(p *prd.PRD, section string) {
 		data = p.Market
 	case "objectives", "goals":
 		data = map[string]interface{}{
-			"business_objectives": p.Objectives.BusinessObjectives,
-			"product_goals":       p.Objectives.ProductGoals,
-			"success_metrics":     p.Objectives.SuccessMetrics,
-			"out_of_scope":        p.OutOfScope,
+			"okrs":         p.Objectives.OKRs,
+			"out_of_scope": p.OutOfScope,
 		}
 	case "solution":
 		data = p.Solution
@@ -177,18 +175,27 @@ func showSpecificSection(p *prd.PRD, section string) {
 		}
 
 	case "objectives", "goals":
-		fmt.Printf("%s\n\n", bold("OBJECTIVES"))
-		if len(p.Objectives.BusinessObjectives) > 0 {
-			fmt.Printf("  Business Objectives:\n")
-			for _, obj := range p.Objectives.BusinessObjectives {
-				fmt.Printf("    [%s] %s\n", obj.ID, obj.Description)
+		fmt.Printf("%s\n\n", bold("OBJECTIVES (OKRs)"))
+		if len(p.Objectives.OKRs) > 0 {
+			for _, okr := range p.Objectives.OKRs {
+				fmt.Printf("  [%s] %s\n", okr.Objective.ID, okr.Objective.Title)
+				if okr.Objective.Description != "" {
+					fmt.Printf("    Description: %s\n", okr.Objective.Description)
+				}
+				if len(okr.Objective.KeyResults) > 0 {
+					fmt.Printf("    Key Results:\n")
+					for _, kr := range okr.Objective.KeyResults {
+						fmt.Printf("      [%s] %s", kr.ID, kr.Title)
+						if kr.Target != "" {
+							fmt.Printf(" (Target: %s)", kr.Target)
+						}
+						fmt.Println()
+					}
+				}
+				fmt.Println()
 			}
-		}
-		if len(p.Objectives.ProductGoals) > 0 {
-			fmt.Printf("\n  Product Goals:\n")
-			for _, obj := range p.Objectives.ProductGoals {
-				fmt.Printf("    [%s] %s\n", obj.ID, obj.Description)
-			}
+		} else {
+			fmt.Println("  No objectives defined")
 		}
 		if len(p.OutOfScope) > 0 {
 			fmt.Printf("\n  Out of Scope:\n")
@@ -342,15 +349,11 @@ func showFullPRD(p *prd.PRD) {
 		fmt.Println("  No problem statement defined")
 	}
 
-	// Goals
-	totalGoals := len(p.Objectives.BusinessObjectives) + len(p.Objectives.ProductGoals)
-	if totalGoals > 0 {
-		fmt.Printf("%s\n", bold("GOALS"))
-		for _, obj := range p.Objectives.ProductGoals {
-			fmt.Printf("  • %s\n", obj.Description)
-		}
-		for _, obj := range p.Objectives.BusinessObjectives {
-			fmt.Printf("  • %s\n", obj.Description)
+	// Goals (OKRs)
+	if len(p.Objectives.OKRs) > 0 {
+		fmt.Printf("%s\n", bold("OBJECTIVES"))
+		for _, okr := range p.Objectives.OKRs {
+			fmt.Printf("  • %s\n", okr.Objective.Title)
 		}
 		fmt.Println()
 	}
@@ -386,10 +389,10 @@ func showFullPRD(p *prd.PRD) {
 		fmt.Printf("  %d NFRs\n\n", len(p.Requirements.NonFunctional))
 	}
 
-	// Metrics
-	if len(p.Objectives.SuccessMetrics) > 0 {
-		fmt.Printf("%s\n", bold("KEY METRICS"))
-		fmt.Printf("  %s\n\n", p.Objectives.SuccessMetrics[0].Name)
+	// Key Results (Metrics)
+	if len(p.Objectives.OKRs) > 0 && len(p.Objectives.OKRs[0].Objective.KeyResults) > 0 {
+		fmt.Printf("%s\n", bold("KEY RESULTS"))
+		fmt.Printf("  %s\n\n", p.Objectives.OKRs[0].Objective.KeyResults[0].Title)
 	}
 
 	// Risks summary

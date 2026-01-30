@@ -144,10 +144,10 @@ func TestValidate(t *testing.T) {
 func TestValidateDuplicateIDs(t *testing.T) {
 	p := New("PRD-2026-001", "Test PRD", Person{Name: "Owner"})
 
-	// Manually create duplicate IDs
-	p.Objectives.ProductGoals = []Objective{
-		{ID: "GOAL-1", Description: "Goal 1"},
-		{ID: "GOAL-1", Description: "Goal 2"}, // Duplicate
+	// Manually create duplicate IDs in OKRs
+	p.Objectives.OKRs = []OKR{
+		{Objective: Objective{ID: "OBJ-1", Title: "Goal 1"}},
+		{Objective: Objective{ID: "OBJ-1", Title: "Goal 2"}}, // Duplicate
 	}
 
 	result := Validate(p)

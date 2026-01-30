@@ -7,6 +7,27 @@
   "maintainers": ["agentplexus", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.3.0",
+      "date": "2026-01-30",
+      "highlights": [
+        { "description": "Migrate from structured-requirements to structured-plan v0.6.0 with OKR-based objectives", "commit": "9b127cb" }
+      ],
+      "changed": [
+        { "description": "Replace legacy Objectives fields (BusinessObjectives, ProductGoals, SuccessMetrics) with OKR structure", "commit": "9b127cb" },
+        { "description": "Update AddObjective() to create OKR entries in Objectives.OKRs", "commit": "9b127cb" },
+        { "description": "Update AddSuccessMetric() to add KeyResults to OKR.KeyResults (top-level)", "commit": "9b127cb" },
+        { "description": "Update show command to display OKRs and Key Results", "commit": "9b127cb" },
+        { "description": "Update validation to check Objectives.OKRs instead of legacy fields", "commit": "9b127cb" }
+      ],
+      "added": [
+        { "description": "Add OKR, KeyResult, PhaseTarget type aliases for structured-plan types", "commit": "9b127cb" },
+        { "description": "Add Goals, GoalItem, ResultItem, Framework type aliases for goals support", "commit": "9b127cb" }
+      ],
+      "dependencies": [
+        { "description": "Replace github.com/grokify/structured-requirements v0.3.2 with github.com/grokify/structured-plan v0.6.0", "commit": "9b127cb" }
+      ]
+    },
+    {
       "version": "v0.2.0",
       "date": "2026-01-26",
       "highlights": [

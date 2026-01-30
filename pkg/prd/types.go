@@ -1,9 +1,9 @@
 // Package prd provides types and operations for Product Requirements Documents.
-// Types are imported from github.com/grokify/structured-requirements/prd.
+// Types are imported from github.com/grokify/structured-plan/requirements/prd.
 package prd
 
 import (
-	structuredprd "github.com/grokify/structured-requirements/prd"
+	structuredprd "github.com/grokify/structured-plan/requirements/prd"
 )
 
 // PRD is an alias for Document from structured-prd, maintaining backward compatibility.
@@ -34,9 +34,23 @@ type ExecutiveSummary = structuredprd.ExecutiveSummary
 
 // Objectives types
 type (
-	Objectives    = structuredprd.Objectives
-	Objective     = structuredprd.Objective
-	SuccessMetric = structuredprd.SuccessMetric
+	Objectives = structuredprd.Objectives
+	Objective  = structuredprd.Objective
+)
+
+// OKR types (v0.4.0+)
+type (
+	OKR         = structuredprd.OKR
+	KeyResult   = structuredprd.KeyResult
+	PhaseTarget = structuredprd.PhaseTarget
+)
+
+// Goals types (v0.5.0+)
+type (
+	Goals      = structuredprd.Goals
+	GoalItem   = structuredprd.GoalItem
+	ResultItem = structuredprd.ResultItem
+	Framework  = structuredprd.Framework
 )
 
 // Persona types

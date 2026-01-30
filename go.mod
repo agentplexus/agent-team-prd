@@ -6,7 +6,7 @@ require (
 	github.com/agentplexus/mcpkit v0.3.1
 	github.com/agentplexus/structured-evaluation v0.2.0
 	github.com/fatih/color v1.18.0
-	github.com/grokify/structured-requirements v0.3.2
+	github.com/grokify/structured-plan v0.6.0
 	github.com/modelcontextprotocol/go-sdk v1.2.0
 	github.com/spf13/cobra v1.10.2
 )
@@ -17,7 +17,6 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/jsonschema-go v0.4.2 // indirect
 	github.com/grokify/mogo v0.72.6 // indirect
-	github.com/grokify/structured-goals v0.1.0 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
 	github.com/inconshreveable/log15/v3 v3.1.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

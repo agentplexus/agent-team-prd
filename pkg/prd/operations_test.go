@@ -62,14 +62,14 @@ func TestAddProductGoal(t *testing.T) {
 	p := New("PRD-2026-001", "Test PRD", Person{Name: "Owner"})
 
 	id := AddProductGoal(p, "Reduce latency by 50%", "Improve user experience")
-	if len(p.Objectives.ProductGoals) != 1 {
-		t.Errorf("expected 1 product goal, got %d", len(p.Objectives.ProductGoals))
+	if len(p.Objectives.OKRs) != 1 {
+		t.Errorf("expected 1 OKR, got %d", len(p.Objectives.OKRs))
 	}
-	if p.Objectives.ProductGoals[0].ID != id {
-		t.Errorf("expected goal ID %s, got %s", id, p.Objectives.ProductGoals[0].ID)
+	if p.Objectives.OKRs[0].Objective.ID != id {
+		t.Errorf("expected objective ID %s, got %s", id, p.Objectives.OKRs[0].Objective.ID)
 	}
-	if p.Objectives.ProductGoals[0].Description != "Reduce latency by 50%" {
-		t.Errorf("expected description 'Reduce latency by 50%%', got %s", p.Objectives.ProductGoals[0].Description)
+	if p.Objectives.OKRs[0].Objective.Title != "Reduce latency by 50%" {
+		t.Errorf("expected title 'Reduce latency by 50%%', got %s", p.Objectives.OKRs[0].Objective.Title)
 	}
 }
 
@@ -166,14 +166,20 @@ func TestAddSuccessMetric(t *testing.T) {
 	p := New("PRD-2026-001", "Test PRD", Person{Name: "Owner"})
 
 	id := AddSuccessMetric(p, "Login Success Rate", "Successful logins / Total attempts", "99.5%")
-	if len(p.Objectives.SuccessMetrics) != 1 {
-		t.Errorf("expected 1 metric, got %d", len(p.Objectives.SuccessMetrics))
+	// AddSuccessMetric creates an objective if none exist, then adds a KeyResult
+	if len(p.Objectives.OKRs) != 1 {
+		t.Errorf("expected 1 OKR, got %d", len(p.Objectives.OKRs))
 	}
-	if p.Objectives.SuccessMetrics[0].ID != id {
-		t.Errorf("expected metric ID %s, got %s", id, p.Objectives.SuccessMetrics[0].ID)
+	// KeyResults are stored in the OKR's top-level KeyResults field (used by scoring/views)
+	if len(p.Objectives.OKRs[0].KeyResults) != 1 {
+		t.Errorf("expected 1 key result, got %d", len(p.Objectives.OKRs[0].KeyResults))
 	}
-	if p.Objectives.SuccessMetrics[0].Target != "99.5%" {
-		t.Errorf("expected target '99.5%%', got %s", p.Objectives.SuccessMetrics[0].Target)
+	kr := p.Objectives.OKRs[0].KeyResults[0]
+	if kr.ID != id {
+		t.Errorf("expected key result ID %s, got %s", id, kr.ID)
+	}
+	if kr.Target != "99.5%" {
+		t.Errorf("expected target '99.5%%', got %s", kr.Target)
 	}
 }
 

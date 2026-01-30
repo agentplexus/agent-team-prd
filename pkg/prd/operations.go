@@ -39,15 +39,16 @@ func NextID(p *PRD, prefix string) string {
 		}
 	}
 
-	// Check objective IDs
-	for _, obj := range p.Objectives.BusinessObjectives {
-		checkID(obj.ID)
-	}
-	for _, obj := range p.Objectives.ProductGoals {
-		checkID(obj.ID)
-	}
-	for _, m := range p.Objectives.SuccessMetrics {
-		checkID(m.ID)
+	// Check objective IDs (OKR structure)
+	for _, okr := range p.Objectives.OKRs {
+		checkID(okr.Objective.ID)
+		// Check KeyResults in both locations
+		for _, kr := range okr.KeyResults {
+			checkID(kr.ID)
+		}
+		for _, kr := range okr.Objective.KeyResults {
+			checkID(kr.ID)
+		}
 	}
 
 	// Check solution IDs
@@ -131,32 +132,33 @@ func AddPersona(p *PRD, name, role string, painPoints []string) string {
 	return id
 }
 
-// AddBusinessObjective adds a business objective to the PRD.
+// AddObjective adds an objective (OKR) to the PRD.
 // Returns the generated ID.
-func AddBusinessObjective(p *PRD, description, rationale string) string {
-	id := NextID(p, "BO")
+func AddObjective(p *PRD, title, description string) string {
+	id := NextID(p, "OBJ")
 	obj := Objective{
 		ID:          id,
+		Title:       title,
 		Description: description,
-		Rationale:   rationale,
 	}
 
-	p.Objectives.BusinessObjectives = append(p.Objectives.BusinessObjectives, obj)
+	okr := OKR{Objective: obj}
+	p.Objectives.OKRs = append(p.Objectives.OKRs, okr)
 	return id
 }
 
-// AddProductGoal adds a product goal to the PRD.
+// AddProductGoal adds a product goal (as an OKR objective) to the PRD.
 // Returns the generated ID.
+// Deprecated: Use AddObjective for new code.
 func AddProductGoal(p *PRD, description, rationale string) string {
-	id := NextID(p, "PG")
-	goal := Objective{
-		ID:          id,
-		Description: description,
-		Rationale:   rationale,
-	}
+	return AddObjective(p, description, rationale)
+}
 
-	p.Objectives.ProductGoals = append(p.Objectives.ProductGoals, goal)
-	return id
+// AddBusinessObjective adds a business objective (as an OKR objective) to the PRD.
+// Returns the generated ID.
+// Deprecated: Use AddObjective for new code.
+func AddBusinessObjective(p *PRD, description, rationale string) string {
+	return AddObjective(p, description, rationale)
 }
 
 // AddOutOfScope adds an out-of-scope item (non-goal) to the PRD.
@@ -249,18 +251,25 @@ func AddNonFunctionalRequirement(p *PRD, category NFRCategory, title, descriptio
 	return id
 }
 
-// AddSuccessMetric adds a success metric to the PRD.
+// AddSuccessMetric adds a success metric as a KeyResult to the first OKR.
+// If no objectives exist, one is created first.
 // Returns the generated ID.
 func AddSuccessMetric(p *PRD, name, description, target string) string {
-	id := NextID(p, "SM")
-	metric := SuccessMetric{
+	// Ensure at least one objective exists
+	if len(p.Objectives.OKRs) == 0 {
+		AddObjective(p, "Product Goals", "Primary product objectives")
+	}
+
+	id := NextID(p, "KR")
+	kr := KeyResult{
 		ID:          id,
-		Name:        name,
+		Title:       name,
 		Description: description,
 		Target:      target,
 	}
 
-	p.Objectives.SuccessMetrics = append(p.Objectives.SuccessMetrics, metric)
+	// Add to first OKR's KeyResults (top-level field used by scoring/views)
+	p.Objectives.OKRs[0].KeyResults = append(p.Objectives.OKRs[0].KeyResults, kr)
 	return id
 }
 
