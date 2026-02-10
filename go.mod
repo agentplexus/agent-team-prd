@@ -6,7 +6,7 @@ require (
 	github.com/agentplexus/mcpkit v0.3.1
 	github.com/agentplexus/structured-evaluation v0.2.0
 	github.com/fatih/color v1.18.0
-	github.com/grokify/structured-plan v0.6.0
+	github.com/grokify/structured-plan v0.8.0
 	github.com/modelcontextprotocol/go-sdk v1.2.0
 	github.com/spf13/cobra v1.10.2
 )
