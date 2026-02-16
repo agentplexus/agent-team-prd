@@ -1,13 +1,13 @@
 module github.com/agentplexus/agent-team-prd
 
-go 1.24.11
+go 1.25.0
 
 require (
-	github.com/agentplexus/mcpkit v0.3.1
+	github.com/agentplexus/mcpkit v0.3.2
 	github.com/agentplexus/structured-evaluation v0.2.0
 	github.com/fatih/color v1.18.0
 	github.com/grokify/structured-plan v0.6.0
-	github.com/modelcontextprotocol/go-sdk v1.2.0
+	github.com/modelcontextprotocol/go-sdk v1.3.0
 	github.com/spf13/cobra v1.10.2
 )
 
@@ -16,7 +16,7 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/jsonschema-go v0.4.2 // indirect
-	github.com/grokify/mogo v0.72.6 // indirect
+	github.com/grokify/mogo v0.73.2 // indirect
 	github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible // indirect
 	github.com/inconshreveable/log15/v3 v3.1.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -31,11 +31,11 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.ngrok.com/muxado/v2 v2.0.1 // indirect
 	golang.ngrok.com/ngrok v1.13.0 // indirect
-	golang.org/x/net v0.49.0 // indirect
-	golang.org/x/oauth2 v0.34.0 // indirect
+	golang.org/x/net v0.50.0 // indirect
+	golang.org/x/oauth2 v0.35.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/term v0.39.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/term v0.40.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
