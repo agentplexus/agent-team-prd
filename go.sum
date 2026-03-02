@@ -21,8 +21,8 @@ github.com/google/jsonschema-go v0.4.2 h1:tmrUohrwoLZZS/P3x7ex0WAVknEkBZM46iALbc
 github.com/google/jsonschema-go v0.4.2/go.mod h1:r5quNTdLOYEz95Ru18zA0ydNbBuYoo9tgaYcxEYhJVE=
 github.com/grokify/mogo v0.72.6 h1:wbLk95PLBB01mDYC/z7dFE18HPXw3hGSs+YwyDSrZ1U=
 github.com/grokify/mogo v0.72.6/go.mod h1:n/KHWr22l3uDj/THPrqYZx9oYKQ8wxnfFMXz4wRQvzY=
-github.com/grokify/structured-plan v0.6.0 h1:ig2qqXMITrMT53FRZIF6T48SOdsicanTs+6cTY4uYUs=
-github.com/grokify/structured-plan v0.6.0/go.mod h1:8V0hvQmWfErlWMWw6ZVAuA15EQmVK2UlG9zdcu2P2yA=
+github.com/grokify/structured-plan v0.8.0 h1:sxR/r1E/udSR2AsLwsJOxkiffuJPFgnXMoJ7KUuAv5o=
+github.com/grokify/structured-plan v0.8.0/go.mod h1:8V0hvQmWfErlWMWw6ZVAuA15EQmVK2UlG9zdcu2P2yA=
 github.com/hashicorp/yamux v0.1.1 h1:yrQxtgseBDrq9Y652vSRDvsKCJKOUD+GzTS4Y0Y8pvE=
 github.com/hashicorp/yamux v0.1.1/go.mod h1:CtWFDAQgb7dxtzFs4tWbplKIe2jSi3+5vKbgIO0SLnQ=
 github.com/inconshreveable/log15 v3.0.0-testing.5+incompatible h1:VryeOTiaZfAzwx8xBcID1KlJCeoWSIpsNbSk+/D2LNk=
